@@ -4,8 +4,11 @@ module.exports = {
     execute(msg, args) {
         var channel = msg.member.voice.channel;
         if (channel) {
-            channel.join();
-            msg.channel.send("ČÁU");
+            channel.join()
+                .then(connection => {
+                    msg.channel.send("ČÁU");
+                })
+                .catch(console.error);
         }
 
     },
