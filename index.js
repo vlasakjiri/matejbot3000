@@ -36,6 +36,7 @@ bot.on('message', msg => {
   }
 });
 
+
 function loadCommands(client, path) {
   const commandFiles = fs.readdirSync(path).filter(file => file.endsWith('.js'));
   client.commands = new Discord.Collection();
