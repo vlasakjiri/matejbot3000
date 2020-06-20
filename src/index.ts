@@ -37,17 +37,12 @@ bot.on('message', msg => {
 
 
 function loadCommands(client: Discord.Client, path: string) {
-<<<<<<< HEAD
     bot.commands = new Discord.Collection();
-=======
-    (client as any).commands = new Discord.Collection();
->>>>>>> 4134826f2c4913c56d457585bb1adb7101030ec5
     const commandFiles = fs.readdirSync(path).filter(file => file.endsWith('.js'));
     for (const file of commandFiles) {
         const command = require(`./commands/${file}`);
         client.commands.set(command.name, command);
     }
-<<<<<<< HEAD
 }
 
 declare module "discord.js" {
@@ -60,6 +55,4 @@ interface command {
     name: string;
     description: string;
     execute(msg: Discord.Message, args: string[]): void
-=======
->>>>>>> 4134826f2c4913c56d457585bb1adb7101030ec5
 }
