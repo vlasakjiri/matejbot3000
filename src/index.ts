@@ -1,7 +1,5 @@
 import fs from "fs";
 import Discord from "discord.js"
-import { BaseClient } from "discord.js";
-// const Discord = require('discord.js');
 const { prefix, token } = require('../config.json');
 const bot = new Discord.Client();
 loadCommands(bot, "build/commands");

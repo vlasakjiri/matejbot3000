@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var discord_js_1 = __importDefault(require("discord.js"));
-// const Discord = require('discord.js');
 var _a = require('../config.json'), prefix = _a.prefix, token = _a.token;
 var bot = new discord_js_1.default.Client();
 loadCommands(bot, "build/commands");
