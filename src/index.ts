@@ -1,9 +1,9 @@
 import fs from "fs";
 import Discord from "discord.js"
+import { BaseClient } from "discord.js";
 // const Discord = require('discord.js');
 const { prefix, token } = require('../config.json');
 const bot = new Discord.Client();
-(bot as any).commands = new Discord.Collection();
 loadCommands(bot, "build/commands");
 bot.login(token);
 
@@ -39,10 +39,22 @@ bot.on('message', msg => {
 
 
 function loadCommands(client: Discord.Client, path: string) {
-    (client as any).commands = new Discord.Collection();
+    bot.commands = new Discord.Collection();
     const commandFiles = fs.readdirSync(path).filter(file => file.endsWith('.js'));
     for (const file of commandFiles) {
         const command = require(`./commands/${file}`);
         client.commands.set(command.name, command);
     }
+}
+
+declare module "discord.js" {
+    interface Client {
+        commands: Collection<string, command>;
+    }
+}
+
+interface command {
+    name: string;
+    description: string;
+    execute(msg: Discord.Message, args: string[]): void
 }

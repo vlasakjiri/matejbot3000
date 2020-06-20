@@ -11,5 +11,6 @@ module.exports = {
             data.push(`${prefix} **${command.name}**: ${command.description}`)
         });
         msg.channel.send(data.join('\n'));
-    },
+    }
 };
+

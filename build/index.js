@@ -8,7 +8,6 @@ var discord_js_1 = __importDefault(require("discord.js"));
 // const Discord = require('discord.js');
 var _a = require('../config.json'), prefix = _a.prefix, token = _a.token;
 var bot = new discord_js_1.default.Client();
-bot.commands = new discord_js_1.default.Collection();
 loadCommands(bot, "build/commands");
 bot.login(token);
 bot.on('ready', function () {
@@ -40,7 +39,7 @@ bot.on('message', function (msg) {
     }
 });
 function loadCommands(client, path) {
-    client.commands = new discord_js_1.default.Collection();
+    bot.commands = new discord_js_1.default.Collection();
     var commandFiles = fs_1.default.readdirSync(path).filter(function (file) { return file.endsWith('.js'); });
     for (var _i = 0, commandFiles_1 = commandFiles; _i < commandFiles_1.length; _i++) {
         var file = commandFiles_1[_i];
