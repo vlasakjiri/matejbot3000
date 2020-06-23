@@ -19,25 +19,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var rand = __importStar(require("../getRandomFile"));
+var randomFile = __importStar(require("../getRandomFile"));
 module.exports = {
-    name: 'vypadni',
-    description: 'Vypadne z voice chanellu a řekne slovo na n s tvrdým r na konci',
+    name: 'diahex',
+    description: 'Přehraje náhodný diahexův bobánek',
     execute: function (msg, args) {
         var _a, _b;
-        var channel = (_b = (_a = msg.guild) === null || _a === void 0 ? void 0 : _a.voice) === null || _b === void 0 ? void 0 : _b.channel;
-        if (channel) {
-            channel.join()
-                .then(function (connection) {
-                var file = rand.getSoundFile("./sounds/vypadni/");
-                var dispatcher = connection.play(file);
-                dispatcher.on("finish", function () {
-                    channel.leave();
-                });
-            });
+        var channel = (_b = (_a = msg.member) === null || _a === void 0 ? void 0 : _a.voice) === null || _b === void 0 ? void 0 : _b.channel;
+        if (!channel) {
+            return msg.reply("a kde ti to mám asi přehrát ty píčo");
         }
         else {
-            msg.channel.send("A kam? Dej mi pokoj. Víš že na tohle nemám čas.");
+            channel.join()
+                .then(function (connection) {
+                var file = randomFile.getSoundFile("./sounds/diahex/");
+                var dispatcher = connection.play(file);
+            })
+                .catch(console.error);
         }
     },
 };
