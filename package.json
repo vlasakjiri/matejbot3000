@@ -4,7 +4,9 @@
   "description": "Matějbot",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
