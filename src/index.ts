@@ -1,12 +1,21 @@
 import fs from "fs";
 import Discord from "discord.js"
-let { prefix, token } = require('../config.json');
 const bot = new Discord.Client();
 loadCommands(bot, "build/commands");
-
-if (!prefix || !token) {
-    prefix = process.env.PREFIX;
-    token = process.env.TOKEN;
+const configPath = '../config.json';
+let prefix: any, token: any;
+try {
+    if (fs.existsSync(configPath)) {
+        let config = require(configPath);
+        prefix = config.prefix;
+        token = config.token;
+    }
+    else {
+        prefix = process.env.PREFIX;
+        token = process.env.TOKEN;
+    }
+} catch (err) {
+    console.error(err)
 }
 bot.login(token);
 
