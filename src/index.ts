@@ -5,8 +5,8 @@ const bot = new Discord.Client();
 loadCommands(bot, "build/commands");
 
 if (!prefix || !token) {
-    prefix = process.env.prefix;
-    token = process.env.token;
+    prefix = process.env.PREFIX;
+    token = process.env.TOKEN;
 }
 bot.login(token);
 
