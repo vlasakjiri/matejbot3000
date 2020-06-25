@@ -1,8 +1,13 @@
 import fs from "fs";
 import Discord from "discord.js"
-const { prefix, token } = require('../config.json');
+let { prefix, token } = require('../config.json');
 const bot = new Discord.Client();
 loadCommands(bot, "build/commands");
+
+if (!prefix || !token) {
+    prefix = process.env.prefix;
+    token = process.env.token;
+}
 bot.login(token);
 
 bot.on('ready', () => {
