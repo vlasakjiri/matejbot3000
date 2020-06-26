@@ -4,68 +4,110 @@ const bot = new Discord.Client();
 loadCommands(bot, "build/commands");
 const configPath = '../config.json';
 let prefix: any, token: any;
-try {
-    if (fs.existsSync(configPath)) {
+try
+{
+    if (fs.existsSync(configPath))
+    {
         let config = require(configPath);
         prefix = config.prefix;
         token = config.token;
     }
-    else {
+    else
+    {
         prefix = process.env.PREFIX;
         token = process.env.TOKEN;
     }
-} catch (err) {
+} catch (err)
+{
     console.error(err)
 }
 bot.login(token);
 
-bot.on('ready', () => {
+bot.on('ready', () =>
+{
     console.info(`Logged in as ${bot?.user?.tag}!`);
 });
 
-bot.on('message', msg => {
-    if (!msg.content || !msg.content.toLowerCase().startsWith(prefix) || msg.author.bot) {
+bot.on('message', msg =>
+{
+    if (!msg.content || !msg.content.toLowerCase().startsWith(prefix) || msg.author.bot)
+    {
         return;
     }
     const args = msg.content.split(/ +/);
-    if (args.length == 1) {
+    if (args.length == 1)
+    {
         msg.reply("co po mně chceš? Víš, že na tohle nemám čas.")
         return;
     }
     args.shift();
     const command = args.shift().toLowerCase();
 
-    if (!bot.commands.has(command)) {
+    if (!bot.commands.has(command))
+    {
         console.info(`Unknown command: ${command}`);
         return;
     }
 
-    try {
+    try
+    {
         console.info(`Calling command: ${command}`);
         bot.commands.get(command).execute(msg, args);
-    } catch (error) {
+    } catch (error)
+    {
         console.error(error);
         msg.reply('there was an error trying to execute that command!');
     }
 });
 
+bot.on('voiceStateUpdate', (oldState, newState) =>
+{
+    let clientChannel = bot.voice.connections.get(newState.guild.id)?.channel;
 
-function loadCommands(client: Discord.Client, path: string) {
+    if (!clientChannel)
+    {
+        return;
+    }
+    if (clientChannel?.members?.size === 1) //if bot alone in channel, leave
+    {
+        clientChannel.leave();
+    }
+    if ((bot.user.id !== newState.member?.id) && (newState.channel?.id === clientChannel?.id) && (oldState.channelID !== newState.channelID || !newState.mute)////
+    {
+        clientChannel.join()
+            .then(connection =>
+            {
+                setTimeout(() =>
+                {
+                    connection.play('./sounds/pocem.mp3');
+                }, 1250);
+            })
+            .catch(console.error);
+    }
+});
+
+
+
+function loadCommands(client: Discord.Client, path: string)
+{
     bot.commands = new Discord.Collection();
     const commandFiles = fs.readdirSync(path).filter(file => file.endsWith('.js'));
-    for (const file of commandFiles) {
+    for (const file of commandFiles)
+    {
         const command = require(`./commands/${file}`);
         client.commands.set(command.name, command);
     }
 }
 
 declare module "discord.js" {
-    interface Client {
+    interface Client
+    {
         commands: Collection<string, command>;
     }
 }
 
-interface command {
+interface command
+{
     name: string;
     description: string;
     execute(msg: Discord.Message, args: string[]): void
