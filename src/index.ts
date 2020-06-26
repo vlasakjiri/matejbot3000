@@ -64,19 +64,16 @@ bot.on('voiceStateUpdate', (oldState, newState) =>
 {
     let clientChannel = bot.voice.connections.get(newState.guild.id)?.channel;
 
-    if (!clientChannel)
-    {
-        return;
-    }
     if (clientChannel?.members?.size === 1) //if bot alone in channel, leave
     {
         clientChannel.leave();
     }
-    if ((bot.user.id !== newState.member?.id) &&
-     (newState.channel?.id === clientChannel?.id) && 
-     (oldState.channelID !== newState.channelID || !newState.mute))////
+    const notBot = bot.user.id !== newState.member?.id;
+    const ourChannel = newState.channel?.id === clientChannel?.id;
+    const channelChanged = oldState.channelID !== newState.channelID;
+    if (notBot && (clientChannel && ourChannel && (channelChanged || !newState.mute) || (!clientChannel && channelChanged && newState.channel)))
     {
-        clientChannel.join()
+        newState.channel.join()
             .then(connection =>
             {
                 setTimeout(() =>
