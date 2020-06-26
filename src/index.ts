@@ -72,7 +72,9 @@ bot.on('voiceStateUpdate', (oldState, newState) =>
     {
         clientChannel.leave();
     }
-    if ((bot.user.id !== newState.member?.id) && (newState.channel?.id === clientChannel?.id) && (oldState.channelID !== newState.channelID || !newState.mute)////
+    if ((bot.user.id !== newState.member?.id) &&
+     (newState.channel?.id === clientChannel?.id) && 
+     (oldState.channelID !== newState.channelID || !newState.mute))////
     {
         clientChannel.join()
             .then(connection =>
