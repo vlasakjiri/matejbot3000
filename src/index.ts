@@ -45,7 +45,7 @@ bot.on('message', msg =>
 
     if (!bot.commands.has(command))
     {
-        console.info(`Unknown command: ${command}`);
+        msg.channel.send(command + "? To se mi nezdá, to bude nějaká pyčovina.");
         return;
     }
 
