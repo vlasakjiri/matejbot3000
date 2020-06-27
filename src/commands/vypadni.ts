@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import * as rand from "../getRandomFile"
+import * as rand from "../helpers"
 
 module.exports = {
     name: 'vypadni',

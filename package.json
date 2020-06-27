@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
+    "@types/glob": "^7.1.2",
     "@types/ws": "^7.2.5",
     "discord.js": "^12.2.0",
+    "glob": "^7.1.6",
     "ytdl-core": "^2.1.7"
   },
   "devDependencies": {

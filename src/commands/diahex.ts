@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import * as randomFile from "../getRandomFile"
+import * as randomFile from "../helpers"
 
 
 module.exports = {
