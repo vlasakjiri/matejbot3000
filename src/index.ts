@@ -34,6 +34,11 @@ bot.on('message', msg =>
     {
         return;
     }
+    if (msg.author.id === "113591841760215046")
+    {
+        msg.reply("Di dopiči krysozmrde");
+        return;
+    }
     const args = msg.content.split(/ +/);
     if (args.length == 1)
     {
