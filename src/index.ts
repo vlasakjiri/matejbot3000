@@ -2,13 +2,13 @@ import fs from "fs";
 import Discord from "discord.js"
 const bot = new Discord.Client();
 loadCommands(bot, "build/commands");
-const configPath = '../config.json';
 let prefix: any, token: any;
 try
 {
-    if (fs.existsSync(configPath))
+    if (fs.existsSync('config.json'))
     {
-        let config = require(configPath);
+
+        let config = require('../config.json');
         prefix = config.prefix;
         token = config.token;
     }
@@ -51,6 +51,16 @@ bot.on('message', msg =>
     if (!bot.commands.has(command))
     {
         msg.channel.send(command + "? To se mi nezdá, to bude nějaká pyčovina.");
+        var channel = msg.member?.voice.channel;
+        if (channel)
+        {
+            channel.join()
+                .then(connection =>
+                {
+                    connection.play('./sounds/vypadni/to nejde.mp3');
+                })
+                .catch(console.error);
+        }
         return;
     }
 

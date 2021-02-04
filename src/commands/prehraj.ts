@@ -14,12 +14,25 @@ module.exports = {
             if (!filename)
             {
                 msg.channel.send("A co mám přehrát vole? Dej mi pokoj.");
+                channel.join()
+                    .then(connection =>
+                    {
+                        connection.play('./sounds/vypadni/to nejde.mp3');
+                    })
+                    .catch(console.error);
                 return;
             }
+            filename = filename.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
             let files = glob.sync(`sounds/**/${filename}.mp3`);
             if (files.length == 0)
             {
                 msg.channel.send(filename + "? To se mi nezdá, to bude nějaká pyčovina.");
+                channel.join()
+                    .then(connection =>
+                    {
+                        connection.play('./sounds/vypadni/to nejde.mp3');
+                    })
+                    .catch(console.error);
                 return;
             }
             channel.join()
@@ -35,3 +48,8 @@ module.exports = {
 
     },
 };
+
+function GetFile(filename: string)
+{
+    fs.readdirSync("")
+} 
